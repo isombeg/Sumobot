@@ -16,7 +16,7 @@ long distance, distance2, distanceR, distanceL;
 
 void setup() {
   
-  Serial.begin (9600);
+  Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(trigPin2, OUTPUT);
@@ -53,25 +53,37 @@ void printDist(){
 void printView(){
   Serial.print("Peripheral Vision Left: ");
   Serial.println(peripheralView(0));
-//  Serial.print("Peripheral Vision Right: ") //Dont work as of now.
-//  Serial.print(peripheralView(1)) 
+  Serial.print("Peripheral Vision Right: "); //Dont work as of now.
+  Serial.print(peripheralView(1)); 
 }
-boolean peripheralView(int side){
+boolean peripheralView(int side){//Returns true or false for the visiblity of an object on the sides in the range [7,80]cm
   //Left = 0, Right = 1
   if(side){ //right
     return (distanceR>=7 && distanceR<=80);
   }else{
-    return (distanceLd>=7 && distanceL<=80);
+    return (distanceL>=7 && distanceL<=80);
+  }
+}
+int isInFront(){
+  if(distance<=80||distance2<=80){
+    if(abs(distance-distance2)<=4){//perfect alignment
+      return 0;
+    }else if(distance>distance2){//enemy on the right, bank right
+      return 1;
+    }else if(distance<distance2){//enemy on the left, bank left
+      return -1;
+    }
   }
 }
 
 void loop() {
-//  boolean test = 3<5;
-//  Serial.println(test);
+//This block updates all the distance readings of the ultrasonic sensors which may or may not be used by other methods
   distance = pingUltra(trigPin, echoPin);
   distance2 = pingUltra(trigPin2, echoPin2);
   distanceL = pingUltra(trigPinL, echoPinL);
   distanceR = pingUltra(trigPinR, echoPinR);
+
+  //Call peripheralView(0) or 1 as well as isInFront() after updating the distances
   printDist();
   printView();
   

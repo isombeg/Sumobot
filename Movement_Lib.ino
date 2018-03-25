@@ -1,7 +1,7 @@
 const int leftForward = 9;
 const int leftBackward = 10;
-const int rightForward = 11;
-const int rightBackward = 12;
+const int rightForward = 5;
+const int rightBackward = 6;
 
 int motorPinList = {leftForward, leftBackward, rightForward, rightBackward};
 
@@ -26,9 +26,8 @@ void backwardDrive(){
 }
 
 void stopMoving(){
-  for (int pin = 9; pin < 13; pin ++){
-    digitalWrite(pin, LOW);
-  }
+  digitalWrite(leftForward, LOW); digitalWrite(leftBackward, LOW);
+  digitalWrite(rightForward, LOW); digitalWrite(rightBackward, LOW);
 }
 
 void leftPivot(){
@@ -51,12 +50,7 @@ void pivotOpp(){ //pivot when side sensors pick up readings
   while (visibleLeft == true){
     rightPivot();
   }
-  while (visibleRight == false){
+  while (visibleRight == right){
     leftPivot();
   }
-}
-
-void loop(){
-  
-  
 }

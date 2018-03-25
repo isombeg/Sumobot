@@ -51,7 +51,7 @@ void pivotOpp(){ //pivot when side sensors pick up readings
   while (visibleLeft == true){
     rightPivot();
   }
-  while (visibleRight == right){
+  while (visibleRight == false){
     leftPivot();
   }
 }

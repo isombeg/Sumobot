@@ -18,11 +18,13 @@ void setup() {
 }
 
 void forwardDrive(){
-  digitalWrite(leftForward, HIGH); digitalWrite(rightForward, HIGH);
+  digitalWrite(leftForward, HIGH); digitalWrite(leftBackward, LOW); 
+  digitalWrite(rightForward, HIGH); digitalWrite(rightBackward, LOW);
 }
 
 void backwardDrive(){
-  digitalWrite(leftBackward, HIGH); digitalWrite(rightBackward, HIGH);
+  digitalWrite(leftForward, LOW); digitalWrite(leftBackward, HIGH); 
+  digitalWrite(rightForward, LOW); digitalWrite(rightBackward, HIGH);
 }
 
 void stopMoving(){
@@ -31,11 +33,13 @@ void stopMoving(){
 }
 
 void leftPivot(){
-  digitalWrite(leftForward, HIGH); digitalWrite(rightBackward, HIGH); // Runs the left motor forward and right motor backward for stationnary pivot
+  digitalWrite(leftForward, HIGH); digitalWrite(leftBackward, LOW);
+  digitalWrite(rightForward, LOW); digitalWrite(rightBackward, HIGH); // Runs the left motor forward and right motor backward for stationnary pivot
 }
 
 void rightPivot(){
-  digitalWrite(rightForward, HIGH); digitalWrite(leftBackward, HIGH); // Runs the right motor forward and left motor backward for stationnary pivot
+  digitalWrite(leftForward, LOW); digitalWrite(leftBackward, HIGH);
+  digitalWrite(rightForward, HIGH); digitalWrite(rightBackward, LOW); // Runs the right motor forward and left motor backward for stationnary pivot
 }
 
 
@@ -50,7 +54,7 @@ void pivotOpp(){ //pivot when side sensors pick up readings
   while (visibleLeft == true){
     rightPivot();
   }
-  while (visibleRight == right){
+  while (visibleRight == false){
     leftPivot();
   }
 }
